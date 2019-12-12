@@ -88,7 +88,7 @@ Route::get('layout/home',function(){
 Route::get('layout/detail',function(){
 	return view('layouts.detail');
 });
-Route::get('layout/list',function(){
+Route::get('list',function(){
 	$lists = [
         [
             'name' => 'Học View trong Laravel',
@@ -116,6 +116,7 @@ Route::get('profile',function(){
 		'target'=>'Thực tập sớm, ra trường làm việc lương cao'
 	]);
 });
+
 Route::get('BT/home',function(){
 	return view('home/home');
 });
