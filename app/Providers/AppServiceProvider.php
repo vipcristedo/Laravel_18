@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\facades\view;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view::share('user',[
+            'name'=>'Sáng',
+            'year'=>'2000'
+        ]);
+        view::share('content','<b>CO</b><sub>2</sub>');
     }
 }
