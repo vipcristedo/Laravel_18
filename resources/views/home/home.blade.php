@@ -41,15 +41,18 @@ Trang chủ
                 <!-- Display Validation Errors -->
 
             <!-- New Task Form -->
-                <form action="{{ url('task')}}" method="POST" class="form-horizontal">
+                <form action="{{ route('todo.task.store') }}" method="POST" class="form-horizontal">
                 {{ csrf_field() }}
 
                 <!-- Task Name -->
                     <div class="form-group">
-                        <label for="task-name" class="col-sm-3 control-label">Tên công việc</label>
-
-                        <div class="col-sm-6">
+                        <label for="task-name" class="col-sm-4 control-label">Tên công việc</label>
+                        <div class="col-sm-8">
                             <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}">
+                        </div>
+                        <label for="task-name" class="col-sm-4 control-label">Deadline</label>
+                        <div class="col-sm-8">
+                            <input type="date" name="deadline" id="task-deadline" class="form-control" value="{{ old('task') }}">
                         </div>
                     </div>
 

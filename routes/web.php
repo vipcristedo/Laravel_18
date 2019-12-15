@@ -13,23 +13,42 @@
 Route::get('',function(){
 	return view('home');
 });
+Route::get('/test/controller/{id?}','HomeController@index');
+Route::get('/SettingController1','SettingController@index');
+
+Route::group([
+	'namespace'=>'Admin'
+],function(){
+	Route::get('/DashboardController','DashboardController@index');
+	Route::get('/SettingController2','SettingController@index');
+	Route::get('/SettingController3','Test\SettingController@index');
+});
+
+//Route::resource('/task','Frontend\TaskController');
+
 // Route::prefix('task')->group(function(){
 // 	Route::delete('/delete/{id}', function ($id) {
 // 		return redirect('/thanhcong/'.$id);
 // 	})->name('todo.task.delete');
 // });
 Route::group([
-	'prefix' => 'task'
+	'prefix' => 'task',
+	'namespace' => 'Frontend'
 ],function(){
-	Route::delete('/delete/{id}', function ($id) {
-		return redirect('/thanhcong/'.$id);
-	})->name('todo.task.delete');
-	Route::get('/reset/{id}', function ($id) {
-		dd('reset task '.$id);
-	})->name('todo.task.reset');
-	Route::get('/complete/{id}', function ($id) {
-		dd('complete task '.$id);
-	})->name('todo.task.complete');
+	Route::get('/','TaskController@index');
+
+	Route::post('/','TaskController@store')->name('todo.task.store');
+
+	Route::delete('/{id}','TaskController@destroy')->name('todo.task.delete');
+
+	Route::patch('/{id}','TaskController@update')->name('todo.task.update');
+
+	Route::get('/{id}','TaskController@show')->name('todo.task.show');
+
+	Route::get('/{id}/edit','TaskController@edit')->name('todo.task.edit');
+
+	Route::get('/reset/{id}','TaskController@reComplete')->name('todo.task.reset');
+	Route::get('/complete/{id}','TaskController@complete')->name('todo.task.complete');
 });
 // Route::group([
 // 	'prefix' => 'task',
@@ -40,10 +59,6 @@ Route::group([
 // 		return redirect('/thanhcong/'.$id);
 // 	})->name('todo.task.delete');
 // });
-
-Route::get('/thanhcong/{id}',function($id){
-	dd('xoa thanh cong '.$id);
-});
 
 Route::get('/user/{id?}', function ($id = null) {
 	if ($id==null) {
@@ -88,6 +103,7 @@ Route::get('layout/home',function(){
 Route::get('layout/detail',function(){
 	return view('layouts.detail');
 });
+
 Route::get('list',function(){
 	$lists = [
         [
@@ -118,5 +134,5 @@ Route::get('profile',function(){
 });
 
 Route::get('BT/home',function(){
-	return view('home/home');
+	return view('home.home');
 });

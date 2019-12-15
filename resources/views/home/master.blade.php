@@ -12,7 +12,9 @@
 <body id="app-layout">
 
 @include('home.header')
+
 @yield('content')
+
 @include('home.footer')
 
 <!-- JavaScripts -->
