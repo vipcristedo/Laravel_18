@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Task;
 
 class TaskController extends Controller
 {
@@ -14,7 +15,14 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('home.home');
+        $tasks = Task::all();
+        // $tasks = Task::where('status', 1)
+        // ->orderBy('name', 'desc')
+        // ->take(5)
+        // ->get();
+        return view('home.home')->with([
+            'tasks'=>$tasks
+        ]);
     }
 
     /**
@@ -37,10 +45,16 @@ class TaskController extends Controller
     {
         //$name=$request->get('name');
         //$input = $request->all();
-        $input = $request->only('name','deadline');
+        //$input = $request->only('name','deadline');
         //$input2 = $request->except('name','deadline');
         //$name=$request->get('name')?$request->get('name'):'laravel';
-        dd($input);
+        $task = new Task();
+        $task->name=$request->get('name');
+        $task->deadline=$request->get('deadline');
+        $task->content=$request->get('content');
+        $task->save();
+
+        return redirect('/task');
     }
 
     /**
@@ -51,7 +65,11 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        $task = Task::find($id);
+        // $task = Task::findOrFail($id);
+        // $task = Task::where('id', $id)->first();
+        // $task = Task::where('id', $id)->firstOrFail();
+        dd($task->name);
     }
 
     /**
@@ -85,7 +103,9 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        dd('Xóa '.$id);
+        $task= Task::find($id);
+        $task->delete();
+        return redirect('/task');
     }
 
     public function complete($id)

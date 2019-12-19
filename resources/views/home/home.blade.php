@@ -46,13 +46,32 @@ Trang chủ
 
                 <!-- Task Name -->
                     <div class="form-group">
-                        <label for="task-name" class="col-sm-4 control-label">Tên công việc</label>
+                        <label for="task-name" class="col-sm-4 control-label">Name</label>
                         <div class="col-sm-8">
-                            <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}">
+                            <input type="text" name="name" id="task-name" class="form-control" placeholder="Tên công việc" value="{{ old('task') }}">
                         </div>
+                    </div>
+                    <div class="form-group">
+
                         <label for="task-name" class="col-sm-4 control-label">Deadline</label>
                         <div class="col-sm-8">
                             <input type="date" name="deadline" id="task-deadline" class="form-control" value="{{ old('task') }}">
+                        </div>
+                    </div>
+                    {{-- <div class="form-group">
+                        <label for="task-name" class="col-sm-4 control-label">Status</label>
+                        <div class="col-sm-8">
+                            <select  class="form-control" name="status">
+                                <option value="1">Đã làm</option>
+                                <option value="0">Chưa làm</option>
+                                <option value="-1">Không làm</option>
+                            </select>
+                        </div>
+                    </div> --}}
+                    <div class="form-group">
+                        <label for="task-name" class="col-sm-4 control-label">Content</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="content" class="form-control" placeholder="Mô tả công việc">
                         </div>
                     </div>
 
@@ -81,17 +100,18 @@ Trang chủ
                     <th>&nbsp;</th>
                     </thead>
                     <tbody>
+                    @foreach ( $tasks as $task )
                     <tr>
-                        <td class="table-text"><div>Làm bài tập Laravel </div></td>
+                        <td class="table-text"><div>{{ $task->name }}</div></td>
                         <!-- Task Complete Button -->
                         <td>
-                            <a href="{{ route('todo.task.complete', 1 ) }}" type="submit" class="btn btn-success">
+                            <a href="{{ route('todo.task.complete', $task->id ) }}" type="submit" class="btn btn-success">
                                 <i class="fa fa-btn fa-check"></i>Hoàn thành
                             </a>
                         </td>
                         <!-- Task Delete Button -->
                         <td>
-                            <form action="{{ route('todo.task.delete', 1 ) }}" method="POST">
+                            <form action="{{ route('todo.task.delete', $task->id ) }}" method="POST">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
@@ -101,46 +121,8 @@ Trang chủ
                             </form>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="table-text"><div>Làm bài tập PHP  </div></td>
-                        <!-- Task Complete Button -->
-                        <td>
-                            <a href="{{ route('todo.task.complete', 2 ) }}" type="submit" class="btn btn-success">
-                                <i class="fa fa-btn fa-check"></i>Hoàn thành
-                            </a>
-                        </td>
-                        <!-- Task Delete Button -->
-                        <td>
-                            <form action="{{ route('todo.task.delete', 2 ) }}" method="POST">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
-
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i>Xoá
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-text"><div><strike>Làm project Laravel </strike></div></td>
-                        <!-- Task Complete Button -->
-                        <td>
-                            <a href="{{ route('todo.task.reset', 3 ) }}" type="submit" class="btn btn-success">
-                                <i class="fa fa-btn fa-refresh"></i>Làm lại
-                            </a>
-                        </td>
-                        <!-- Task Delete Button -->
-                        <td>
-                            <form action="{{ route('todo.task.delete', 3 ) }}" method="POST">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
-
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i>Xoá
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+                    @endforeach
+                    
                     </tbody>
                 </table>
             </div>

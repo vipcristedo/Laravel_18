@@ -11,7 +11,7 @@
 |
 */
 Route::get('',function(){
-	return view('home');
+	return view('home.home');
 });
 Route::get('/test/controller/{id?}','HomeController@index');
 Route::get('/SettingController1','SettingController@index');
@@ -50,6 +50,7 @@ Route::group([
 	Route::get('/reset/{id}','TaskController@reComplete')->name('todo.task.reset');
 	Route::get('/complete/{id}','TaskController@complete')->name('todo.task.complete');
 });
+
 // Route::group([
 // 	'prefix' => 'task',
 // 	'namspace' => 'admin',
