@@ -35,13 +35,15 @@ Route::group([
 	'prefix' => 'task',
 	'namespace' => 'Frontend'
 ],function(){
-	Route::get('/','TaskController@index');
+	Route::get('/','TaskController@index')->name('todo.task.index');
+
+	Route::get('/create','TaskController@create')->name('todo.task.create');
 
 	Route::post('/','TaskController@store')->name('todo.task.store');
 
 	Route::delete('/{id}','TaskController@destroy')->name('todo.task.delete');
 
-	Route::patch('/{id}','TaskController@update')->name('todo.task.update');
+	Route::match(['put','patch'],'/{id}','TaskController@update')->name('todo.task.update');
 
 	Route::get('/{id}','TaskController@show')->name('todo.task.show');
 
@@ -49,6 +51,7 @@ Route::group([
 
 	Route::get('/reset/{id}','TaskController@reComplete')->name('todo.task.reset');
 	Route::get('/complete/{id}','TaskController@complete')->name('todo.task.complete');
+	Route::get('/reComplete/{id}','TaskController@reComplete')->name('todo.task.reComplete');
 });
 
 // Route::group([

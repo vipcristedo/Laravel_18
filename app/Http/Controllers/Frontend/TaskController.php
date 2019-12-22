@@ -32,7 +32,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('home.create');
     }
 
     /**
@@ -50,11 +50,13 @@ class TaskController extends Controller
         //$name=$request->get('name')?$request->get('name'):'laravel';
         $task = new Task();
         $task->name=$request->get('name');
-        $task->deadline=$request->get('deadline');
+        $task->deadline=$request->substr($task->deadline,0,-9).' '.substr($task->deadline,11);
         $task->content=$request->get('content');
+        $task->status=$request->get('status');
+        $task->priority=$request->get('priority');
         $task->save();
 
-        return redirect('/task');
+        return redirect()->route('todo.task.index');
     }
 
     /**
@@ -69,7 +71,7 @@ class TaskController extends Controller
         // $task = Task::findOrFail($id);
         // $task = Task::where('id', $id)->first();
         // $task = Task::where('id', $id)->firstOrFail();
-        dd($task->name);
+        return view('home.show')->with('task',$task);
     }
 
     /**
@@ -80,7 +82,13 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        //
+        $task= Task::find($id);
+        $task->deadline=substr($task->deadline,0,-9).'T'.substr($task->deadline,11);
+        return view('home.edit')->with([
+            'task'=>$task,
+            'status'=>$task->status_value,
+            'priority'=>$task->priority_value
+    ]);
     }
 
     /**
@@ -92,7 +100,16 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task = Task::find($id);
+
+        $task->name=$request->get('name');
+        $task->deadline=substr($task->deadline,0,-9).' '.substr($task->deadline,11);
+        $task->content=$request->get('content');
+        $task->status=$request->get('status');
+        $task->priority=$request->get('priority');
+        $task->save();
+
+        return redirect()->route('todo.task.index');
     }
 
     /**
@@ -110,11 +127,19 @@ class TaskController extends Controller
 
     public function complete($id)
     {
-        dd('Hoàn thành '.$id);
+        $task = Task::find($id);
+        $task->status=2;
+        $task->save();
+
+        return redirect()->route('todo.task.index');
     }
 
     public function reComplete($id)
     {
-        dd('Làm lại '.$id);
+        $task = Task::find($id);
+        $task->status=1;
+        $task->save();
+
+        return redirect()->route('todo.task.index');
     }
 }
