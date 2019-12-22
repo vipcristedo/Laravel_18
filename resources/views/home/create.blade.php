@@ -55,7 +55,7 @@ Thêm mới task
 
                         <label for="task-name" class="col-sm-4 control-label">Deadline</label>
                         <div class="col-sm-8">
-                            <input type="date" name="deadline" id="task-deadline" class="form-control" value="{{ old('task') }}">
+                            <input type="datetime-local" name="deadline" id="task-deadline" class="form-control" value="{{ old('task') }}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -78,13 +78,13 @@ Thêm mới task
                     <div class="form-group">
                         <label for="task-name" class="col-sm-4 control-label">Priority</label>
                         <div class="col-sm-8">
-                            <select  class="form-control" name="status">
+                            <select  class="form-control" name="priority">
                                 <option value="0">Bình thường</option>
                                 <option value="1">Quan trọng</option>
                                 <option value="2">Khẩn cấp</option>
                             </select>
                         </div>
-
+                    </div>
                     <!-- Add Task Button -->
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-6">

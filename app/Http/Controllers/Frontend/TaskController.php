@@ -50,7 +50,7 @@ class TaskController extends Controller
         //$name=$request->get('name')?$request->get('name'):'laravel';
         $task = new Task();
         $task->name=$request->get('name');
-        $task->deadline=$request->substr($task->deadline,0,-9).' '.substr($task->deadline,11);
+        $task->deadline=$request->get('deadline');
         $task->content=$request->get('content');
         $task->status=$request->get('status');
         $task->priority=$request->get('priority');
@@ -103,7 +103,7 @@ class TaskController extends Controller
         $task = Task::find($id);
 
         $task->name=$request->get('name');
-        $task->deadline=substr($task->deadline,0,-9).' '.substr($task->deadline,11);
+        $task->deadline=$request->get('deadline');
         $task->content=$request->get('content');
         $task->status=$request->get('status');
         $task->priority=$request->get('priority');
